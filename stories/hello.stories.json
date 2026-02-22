@@ -1,0 +1,14 @@
+{
+ "stories": [
+   {
+     "name": "Hello",
+     "parameters": { "server": { "id": "hello" } },
+     "args": { "noun": "Nerds!" },
+     "argTypes": {
+       "noun": {
+         "control": { "type": "text" }
+       }
+     }
+   }
+ ]
+}

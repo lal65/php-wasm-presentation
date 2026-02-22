@@ -1,0 +1,60 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches:
+      - main
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      pages: write
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up PHP + Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+      - name: Install Symfony dependencies
+        uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: locked
+          working-directory: www
+      - name: Set up NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: Build the service worker and storybook
+        run: npm install && npm run build && npm run build-storybook
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './storybook-static'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,14 @@
+<!-- .storybook/preview-head.html -->
+<script>
+  console.log('attempting to register to...' + window.location.pathname.replace('index.html', '').replace('iframe.html', ''));
+ navigator.serviceWorker.register('./cgi-worker.js', {
+   scope: window.location.pathname.replace('index.html', '').replace('iframe.html', ''),
+   type: 'module',
+ })
+ .then(() =>  {
+   console.debug('✅ Registration successful!');
+ })
+ .catch(error => {
+   console.error('❌ Registration failed: ', error);
+ });
+</script>

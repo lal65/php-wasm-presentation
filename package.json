@@ -1,0 +1,28 @@
+{
+  "name": "php-wasm-presentation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node bundler.mjs && cd www && zip -qr ../build/www.zip .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
+    "@storybook/server-webpack5": "^10.2.10",
+    "storybook": "^10.2.10"
+  },
+  "dependencies": {
+    "esbuild": "^0.27.3",
+    "esbuild-plugin-copy": "^2.1.1",
+    "fflate": "^0.8.2",
+    "php-cgi-wasm": "^0.0.9-alpha-32",
+    "php-wasm-iconv": "^0.0.9-alpha-32",
+    "php-wasm-mbstring": "^0.0.9-alpha-32"
+  }
+}
